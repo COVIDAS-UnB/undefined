@@ -2,7 +2,7 @@
 
 Durante esse momento de crise, todos têm enfrentado diversas adversidades. Muitos, ainda, foram consideravelmente afetados em suas finanças e enfrentam dificuldades para cobrir gastos essenciais, como alimentação, energia, abastecimento de água e acesso à internet.
 
-No contexto acadêmico, um discente que se encontra nessa situação também terá dificuldade em se preparar para uma futura implementação do ensino a distância ou para a volta das atividades presenciais.
+Um discente, que encontra-se nesta situação, também terá dificuldade em se preparar para uma futura implementação do ensino a distância ou para a volta das atividades presenciais.
 
 Para não discriminar e não prejudicar esses alunos, as instituições têm elaborado soluções, porém algumas circunstâncias atuais, como a diminuição de recursos advindos do governo federal, demonstram a necessidade de soluções alternativas implementadas em conjunto com a sociedade.
 
