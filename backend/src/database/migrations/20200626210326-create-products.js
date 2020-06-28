@@ -1,71 +1,75 @@
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('products', {
+    return queryInterface.createTable("products", {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       title: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       desc: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
+      },
+      vakinha: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
       // se é doado ou oferecido
       type: {
         type: Sequelize.BOOLEAN,
-        allowNull: false,
+        allowNull: false
       },
       // 1 - doação / 2 - venda // 3 - emprestimo
       product_type: {
         type: Sequelize.INTEGER,
-        allowNull: false,
+        allowNull: false
       },
       price: {
         type: Sequelize.STRING,
         allowNull: true,
-        defaultValue: null,
+        defaultValue: null
       },
       user_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'users', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-        allowNull: true,
+        references: { model: "users", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+        allowNull: true
       },
       owner_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'users', key: 'id' },
-        onUpdate: 'CASCADE',
-        onDelete: 'SET NULL',
-        allowNull: true,
+        references: { model: "users", key: "id" },
+        onUpdate: "CASCADE",
+        onDelete: "SET NULL",
+        allowNull: true
       },
       reserve: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
-        defaultValue: false,
+        defaultValue: false
       },
       contract: {
         type: Sequelize.BOOLEAN,
-        allowNull: true,
+        allowNull: true
       },
 
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: false
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
-      },
+        allowNull: false
+      }
     });
   },
 
   down: queryInterface => {
-    return queryInterface.dropTable('products');
-  },
+    return queryInterface.dropTable("products");
+  }
 };

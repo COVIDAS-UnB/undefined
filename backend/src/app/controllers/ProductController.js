@@ -1,7 +1,7 @@
-import Product from '../models/Product';
-import File from '../models/File';
-import User from '../models/User';
-import Notification from '../schema/Notifications';
+import Product from "../models/Product";
+import File from "../models/File";
+import User from "../models/User";
+import Notification from "../schema/Notifications";
 
 // cadastro de produtos
 class ProductController {
@@ -12,16 +12,16 @@ class ProductController {
       include: [
         {
           model: User,
-          as: 'owner',
-          attributes: ['id', 'name'],
+          as: "owner",
+          attributes: ["id", "name"],
           include: [
             {
               model: File,
-              attributes: ['id', 'path', 'url'],
-            },
-          ],
-        },
-      ],
+              attributes: ["id", "path", "url"]
+            }
+          ]
+        }
+      ]
     });
     return res.json(products);
   }
@@ -35,6 +35,7 @@ class ProductController {
       image_id,
       telegram,
       product_type,
+      vakinha
     } = req.body;
 
     if (product_type == 3) {
@@ -49,6 +50,7 @@ class ProductController {
       image_id,
       telegram,
       product_type,
+      vakinha
     });
     return res.json(product);
   }
@@ -60,16 +62,16 @@ class ProductController {
       include: [
         {
           model: User,
-          as: 'owner',
-          attributes: ['id', 'name'],
+          as: "owner",
+          attributes: ["id", "name"],
           include: [
             {
               model: File,
-              attributes: ['id', 'path', 'url'],
-            },
-          ],
-        },
-      ],
+              attributes: ["id", "path", "url"]
+            }
+          ]
+        }
+      ]
     });
     return res.json(product);
   }
@@ -81,23 +83,23 @@ class ProductController {
     const owner_id = product.owner_id;
     await product.update({
       reserve: true,
-      user_id: req.userId,
+      user_id: req.userId
     });
     const reformuledProduct = await Product.findOne({
       where: { id: req.params.id },
       include: [
         {
           model: User,
-          as: 'owner',
-          attributes: ['id', 'name', 'email', 'telegram', 'whatsapp'],
+          as: "owner",
+          attributes: ["id", "name", "email", "telegram", "whatsapp"],
           include: [
             {
               model: File,
-              attributes: ['id', 'path', 'url'],
-            },
-          ],
-        },
-      ],
+              attributes: ["id", "path", "url"]
+            }
+          ]
+        }
+      ]
     });
     const user = await User.findByPk(user_id);
     const owner = await User.findByPk(owner_id);
@@ -106,14 +108,14 @@ class ProductController {
       await Notification.create({
         content: `O  : ${user.name} decidiu te ajudar.
          Segue o contato dele: ${owner.whatsapp}`,
-        user: owner.id,
+        user: owner.id
       });
     }
     if (product.type === false) {
       await Notification.create({
         content: `O  : ${user.name} Se interessou pelo seu produto
           Segue o contato dele ${owner.whatsapp}`,
-        user: owner.id,
+        user: owner.id
       });
     }
 
