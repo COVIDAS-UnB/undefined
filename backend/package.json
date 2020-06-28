@@ -8,6 +8,7 @@
     "eslinty": "yarn eslint --fix src --ext .js"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.2.1",
     "bcryptjs": "^2.4.3",
     "date-fns": "^2.0.0-beta.5",
     "express": "^4.17.1",

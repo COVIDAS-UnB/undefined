@@ -10,7 +10,7 @@ class UserController {
     async function Authentication() {
       const url = "https://sig.unb.br/sigaa/mobile/touch/login.jsf";
       const browser = await puppeteer.launch({
-        headless: true
+        headless: false
       });
       const page = await browser.newPage();
       await page.goto(url);
@@ -43,7 +43,16 @@ class UserController {
       }
     }
     const authentic = await Authentication();
-    const { name, email, whatsapp, telegram, lat, long, password } = req.body;
+    const {
+      name,
+      email,
+      whatsapp,
+      telegram,
+      lat,
+      long,
+      password,
+      description
+    } = req.body;
     const user = await User.create({
       name,
       email,
@@ -52,6 +61,7 @@ class UserController {
       lat,
       long,
       password,
+      description,
       student_unb: authentic
     });
     return res.json({
@@ -63,6 +73,7 @@ class UserController {
       telegram: user.telegram,
       lat: user.lat,
       long: user.long,
+      description: user.description,
       student_unb: user.student_unb
     });
   }
