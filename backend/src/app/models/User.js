@@ -10,9 +10,7 @@ class User extends Model {
         description: Sequelize.STRING,
         password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
-        whatsapp: Sequelize.STRING,
-        telegram: Sequelize.STRING,
-        vakinha: Sequelize.STRING,
+        number: Sequelize.STRING,
         lat: Sequelize.FLOAT,
         long: Sequelize.FLOAT,
         student_unb: Sequelize.BOOLEAN

@@ -2,7 +2,8 @@ import Product from "../models/Product";
 import File from "../models/File";
 import User from "../models/User";
 import Notification from "../schema/Notifications";
-
+import sgMail from "@sendgrid/mail";
+sgMail.setApiKey(process.env.SENDGRID);
 // cadastro de produtos
 class ProductController {
   //mostra todos os produtso
@@ -34,8 +35,7 @@ class ProductController {
       price,
       image_id,
       telegram,
-      product_type,
-      vakinha
+      product_type
     } = req.body;
 
     if (product_type == 3) {
@@ -49,8 +49,7 @@ class ProductController {
       price,
       image_id,
       telegram,
-      product_type,
-      vakinha
+      product_type
     });
     return res.json(product);
   }
@@ -79,12 +78,17 @@ class ProductController {
 
   async select(req, res) {
     const product = await Product.findByPk(req.params.id);
-    const user_id = product.user_id;
     const owner_id = product.owner_id;
+    if (req.userId === owner_id) {
+      return res.json({
+        error: "erro você não pode reserve o seu proprio produto"
+      });
+    }
     await product.update({
       reserve: true,
       user_id: req.userId
     });
+    const user_id = product.user_id;
     const reformuledProduct = await Product.findOne({
       where: { id: req.params.id },
       include: [
@@ -103,20 +107,34 @@ class ProductController {
     });
     const user = await User.findByPk(user_id);
     const owner = await User.findByPk(owner_id);
-
+    const msg = {
+      to: `${owner.email}`,
+      from: process.env.FROM,
+      subject: "cczczczc",
+      text: "zczczczc",
+      html: "<strong>adoadakod</strong>"
+    };
+    const msg2 = {
+      to: `${user.email}`,
+      from: process.env.FROM,
+      subject: "cczczczc",
+      text: "zczczczc",
+      html: "<strong>adoadakod</strong>"
+    };
     if (product.type === true) {
+      // quando é o produto ajuda
       await Notification.create({
-        content: `O  : ${user.name} decidiu te ajudar.
-         Segue o contato dele: ${owner.whatsapp}`,
+        content: `O  : ${user.name} decidiu te ajudar. Segue o contato dele: ${user.whatsapp}`,
         user: owner.id
       });
-    }
+      await sgMail.send(msg2);
+    } //produto ofereido
     if (product.type === false) {
       await Notification.create({
-        content: `O  : ${user.name} Se interessou pelo seu produto
-          Segue o contato dele ${owner.whatsapp}`,
+        content: `O  : ${user.name} se interessou pelo seu produto Segue o contato dele: ${user.whatsapp}`,
         user: owner.id
       });
+      await sgMail.send(msg);
     }
 
     return res.json(reformuledProduct);

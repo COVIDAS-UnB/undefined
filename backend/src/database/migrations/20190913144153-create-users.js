@@ -15,10 +15,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      telegram: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -28,9 +24,9 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false
       },
-      whatsapp: {
+      number: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
       },
       student_unb: {
         type: Sequelize.BOOLEAN,

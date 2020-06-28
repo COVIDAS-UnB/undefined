@@ -1,11 +1,15 @@
-import express from 'express';
-import routes from './routes';
-import path from 'path';
-import './database';
+//importando o dotenv
+import "dotenv/config";
+import express from "express";
+import routes from "./routes";
+import path from "path";
+import "./database";
+import cors from "cors";
 
 class App {
   constructor() {
     this.server = express();
+    this.server.use(cors());
     this.middlewares();
     this.routes();
   }
@@ -13,8 +17,8 @@ class App {
   middlewares() {
     this.server.use(express.json());
     this.server.use(
-      '/files',
-      express.static(path.resolve(__dirname, '..', 'tmp', 'uploads'))
+      "/files",
+      express.static(path.resolve(__dirname, "..", "tmp", "uploads"))
     );
   }
 
