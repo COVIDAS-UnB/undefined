@@ -3,7 +3,7 @@ import File from "../models/File";
 import User from "../models/User";
 import Notification from "../schema/Notifications";
 import sgMail from "@sendgrid/mail";
-sgMail.setApiKey("");
+sgMail.setApiKey(process.env.SENDGRID);
 // cadastro de produtos
 class ProductController {
   //mostra todos os produtso
@@ -79,6 +79,11 @@ class ProductController {
   async select(req, res) {
     const product = await Product.findByPk(req.params.id);
     const owner_id = product.owner_id;
+    if (req.userId === owner_id) {
+      return res.json({
+        error: "erro você não pode reserve o seu proprio produto"
+      });
+    }
     await product.update({
       reserve: true,
       user_id: req.userId
@@ -104,14 +109,14 @@ class ProductController {
     const owner = await User.findByPk(owner_id);
     const msg = {
       to: `${owner.email}`,
-      from: "",
+      from: process.env.FROM,
       subject: "cczczczc",
       text: "zczczczc",
       html: "<strong>adoadakod</strong>"
     };
     const msg2 = {
       to: `${user.email}`,
-      from: "helpstoody@gmail.com",
+      from: process.env.FROM,
       subject: "cczczczc",
       text: "zczczczc",
       html: "<strong>adoadakod</strong>"
@@ -119,8 +124,7 @@ class ProductController {
     if (product.type === true) {
       // quando é o produto ajuda
       await Notification.create({
-        content: `O  : ${user.name} decidiu te ajudar.
-         Segue o contato dele: ${user.whatsapp}`,
+        content: `O  : ${user.name} decidiu te ajudar. Segue o contato dele: ${user.whatsapp}`,
         user: owner.id
       });
       await sgMail.send(msg2);

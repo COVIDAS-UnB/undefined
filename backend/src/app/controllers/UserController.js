@@ -43,21 +43,11 @@ class UserController {
       }
     }
     const authentic = await Authentication();
-    const {
-      name,
-      email,
-      whatsapp,
-      telegram,
-      lat,
-      long,
-      password,
-      description
-    } = req.body;
+    const { name, email, number, lat, long, password, description } = req.body;
     const user = await User.create({
       name,
       email,
-      whatsapp,
-      telegram,
+      number,
       lat,
       long,
       password,
@@ -68,9 +58,7 @@ class UserController {
       id: user.id,
       name: user.name,
       email: user.email,
-      phone: user.phone,
-      whatsapp: user.whatsapp,
-      telegram: user.telegram,
+      number: user.number,
       lat: user.lat,
       long: user.long,
       description: user.description,
