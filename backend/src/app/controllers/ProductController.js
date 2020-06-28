@@ -3,7 +3,7 @@ import File from "../models/File";
 import User from "../models/User";
 import Notification from "../schema/Notifications";
 import sgMail from "@sendgrid/mail";
-sgMail.setApiKey();
+sgMail.setApiKey("");
 // cadastro de produtos
 class ProductController {
   //mostra todos os produtso
@@ -109,15 +109,23 @@ class ProductController {
       text: "zczczczc",
       html: "<strong>adoadakod</strong>"
     };
-    if (product.type == true) {
+    const msg2 = {
+      to: `${user.email}`,
+      from: "helpstoody@gmail.com",
+      subject: "cczczczc",
+      text: "zczczczc",
+      html: "<strong>adoadakod</strong>"
+    };
+    if (product.type === true) {
       // quando é o produto ajuda
       await Notification.create({
-        content: `O  : ${user.name} decidiu te ajudar. Segue o contato dele: ${owner.whatsapp}`,
+        content: `O  : ${user.name} decidiu te ajudar.
+         Segue o contato dele: ${user.whatsapp}`,
         user: owner.id
       });
-      await sgMail.send(msg);
+      await sgMail.send(msg2);
     } //produto ofereido
-    if (product.type == false) {
+    if (product.type === false) {
       await Notification.create({
         content: `O  : ${user.name} se interessou pelo seu produto Segue o contato dele: ${user.whatsapp}`,
         user: owner.id
