@@ -2,6 +2,6 @@ import React from 'react';
 
 // import { Container } from './styles';
 
-export default function Dashboard() {
-  return <h1>Dashboard</h1>;
+export default function Profile() {
+  return <h1>Profile</h1>;
 }
